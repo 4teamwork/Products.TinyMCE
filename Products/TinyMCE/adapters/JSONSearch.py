@@ -47,6 +47,11 @@ class JSONSearch(object):
             brains = self.context.portal_catalog.searchResults(**query)
 
             for brain in brains:
+                if not brain:
+                    # With solr, brain is sometimes None
+                    # https://github.com/4teamwork/izug.organisation/issues/664
+                    continue
+
                 catalog_results.append({
                     'id': brain.getId,
                     'uid': brain.UID,
